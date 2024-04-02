@@ -28,6 +28,10 @@ public class SecurityConfiguration {
             authorizeRequests
               .requestMatchers(HttpMethod.POST, "/users")
                 .permitAll()
+              .requestMatchers("/api-docs/**", "api-docs.yaml")
+                .permitAll()
+              .requestMatchers("/swagger-ui-custom.html", "/swagger-ui/**", "/swagger-ui/")
+                .permitAll()
               .anyRequest()
                 .authenticated()
             )
