@@ -24,7 +24,7 @@ public class User {
     private String phone;
     @Column(unique = true)
     private String email;
-    private String hash;
+    private String password;
     private boolean active;
     @Enumerated(EnumType.STRING)
     private Role role;
