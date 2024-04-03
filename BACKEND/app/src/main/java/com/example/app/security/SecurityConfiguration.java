@@ -1,5 +1,6 @@
 package com.example.app.security;
 
+import com.example.app.model.Role;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -29,6 +30,8 @@ public class SecurityConfiguration {
           .sessionManagement(sessionManagement -> sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
           .authorizeRequests(authorizeRequests ->
             authorizeRequests
+              .requestMatchers(HttpMethod.GET, "/users/me")
+                .hasAnyAuthority(Role.ADMIN.name(), Role.CUSTOMER.name(), Role.DELIVERY_PERSON.name())
               .requestMatchers(HttpMethod.POST, "/users/auth")
                 .permitAll()
               .requestMatchers(HttpMethod.POST, "/users")
