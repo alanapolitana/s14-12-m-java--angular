@@ -1,6 +1,8 @@
 package com.example.app.controller;
 
+import com.example.app.dto.user.LoggedUserDto;
 import com.example.app.dto.user.SignedUserDTO;
+import com.example.app.dto.user.UserToLoginDto;
 import com.example.app.dto.user.UserToSignUpDto;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,11 +16,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
@@ -40,7 +40,7 @@ public class UserController {
         responseCode = "200", description = "User created successfully",
         content = {
           @Content(mediaType = "application/json",
-            schema = @Schema(implementation = UserToSignUpDto.class))
+            schema = @Schema(implementation = SignedUserDTO.class))
         }),
       @ApiResponse(responseCode = "400", description = "User Already Exists", content = {@Content}),
       @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content}),
@@ -68,5 +68,52 @@ public class UserController {
         return ResponseEntity
           .created(location)
           .body(userSignedUpDto);
+    }
+
+    @Operation(
+      summary = "User Login section.",
+      description = "Let a user login with the email account. Return a token"
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User logged successfully",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = LoggedUserDto.class))
+        }),
+      @ApiResponse(responseCode = "400", description = "User data login incorrect", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @SecurityRequirements()
+    @PostMapping("/auth")
+    @Transactional
+    public ResponseEntity<LoggedUserDto> login(@RequestBody @Valid UserToLoginDto userToLoginDto) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.login(userToLoginDto));
+    }
+
+    @Operation(
+      summary = "User gets its data using auth token.",
+      description = "Let a logged user get its data using the authorization token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User found successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @GetMapping("/me")
+    public ResponseEntity<SignedUserDTO> getUser(HttpServletRequest request) {
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.getUser(request));
     }
 }

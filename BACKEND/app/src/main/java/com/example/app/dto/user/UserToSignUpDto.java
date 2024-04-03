@@ -2,7 +2,6 @@ package com.example.app.dto.user;
 
 import com.example.app.model.Role;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
@@ -17,7 +16,7 @@ public record UserToSignUpDto(
   @NotBlank(message = "El apellido es requerido")
   String lastName,
   @NotBlank(message = "El username es requerido")
-  String userName,
+  String alias,
   @NotBlank(message = "El numero de teléfono es requerido")
   String phone,
   @NotBlank(message = "El email es requerido")
