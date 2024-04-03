@@ -129,7 +129,7 @@ public class UserService {
             throw new UserNotFoundException("User not found in the database");
         }
 
-        return userRepository.findByPhoneAndActiveTrue(userPhone);
+        return (User) userRepository.findByPhoneAndActiveTrue(userPhone);
     }
 
 }

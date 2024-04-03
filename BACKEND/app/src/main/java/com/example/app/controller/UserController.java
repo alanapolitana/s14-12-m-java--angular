@@ -73,6 +73,22 @@ public class UserController {
           .body(userSignedUpDto);
     }
 
+    @Operation(
+      summary = "User Login section.",
+      description = "Let a user login with the email account. Return a token"
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User logged successfully",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = LoggedUserDto.class))
+        }),
+      @ApiResponse(responseCode = "400", description = "User data login incorrect", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @SecurityRequirements()
     @PostMapping("/auth")
     @Transactional
     public ResponseEntity<LoggedUserDto> login(@RequestBody @Valid UserToLoginDto userToLoginDto) {
