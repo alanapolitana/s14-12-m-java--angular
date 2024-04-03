@@ -2,6 +2,8 @@ package com.example.app.service;
 
 import com.example.app.dto.user.SignedUserDTO;
 import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.exception.user.UserAlreadyExistsException;
+import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
 import com.example.app.model.Role;
 import com.example.app.model.User;
@@ -23,13 +25,13 @@ public class UserService {
 
         //Check if the user already exists: email, phone or username
         if (userRepository.existsByEmailAndActiveTrue(userToSignUpDto.email()))
-            throw new RuntimeException("Ya existe un usuario con ese email");
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese email");
 
         if (userRepository.existsByPhoneAndActiveTrue(userToSignUpDto.phone()))
-            throw new RuntimeException("Ya existe un usuario con ese teléfono");
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese teléfono");
 
         if (userRepository.existsByUserNameAndActiveTrue(userToSignUpDto.userName()))
-            throw new RuntimeException("Ya existe un usuario con ese username");
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
 
         // Get the plain password
         String plainPassword = userToSignUpDto.password();
@@ -80,7 +82,7 @@ public class UserService {
         boolean existsUser = userRepository.existsByPhoneAndActiveTrue(userPhone);
 
         if (!existsUser) {
-            throw new RuntimeException("User not found in the database");
+            throw new UserNotFoundException("User not found in the database");
         }
 
         return userRepository.findByPhoneAndActiveTrue(userPhone);
