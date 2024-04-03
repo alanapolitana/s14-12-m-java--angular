@@ -1,8 +1,11 @@
 package com.example.app.service;
 
+import com.example.app.dto.user.LoggedUserDto;
 import com.example.app.dto.user.SignedUserDTO;
+import com.example.app.dto.user.UserToLoginDto;
 import com.example.app.dto.user.UserToSignUpDto;
 import com.example.app.exception.user.UserAlreadyExistsException;
+import com.example.app.exception.user.UserDataLoginException;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.UserMapper;
 import com.example.app.model.Role;
@@ -11,6 +14,9 @@ import com.example.app.repository.UserRepository;
 import com.example.app.security.PasswordEncoder;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -20,6 +26,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
 
     public SignedUserDTO signUp(UserToSignUpDto userToSignUpDto, HttpServletRequest request) {
 
@@ -70,6 +77,43 @@ public class UserService {
 
     }
 
+    public LoggedUserDto login(UserToLoginDto userToLoginDto) {
+        // Get the user email
+        String userEmail = userToLoginDto.email();
+
+        // Check if the user exists
+        if (!userRepository.existsByEmailAndActiveTrue(userEmail))
+            throw new UserNotFoundException("El usuario no existe en la base de datos");
+
+        // Get hashed password from the database
+        String hashedPassword = userRepository.findByEmailAndActiveTrue(userEmail).getPassword();
+
+        // Check if the password is correct
+        boolean passwordMatches = PasswordEncoder.verifyPassword(userToLoginDto.password(), hashedPassword);
+
+        if (!passwordMatches)
+            throw new UserDataLoginException("El email o la contraseña es incorrecta.");
+
+        // Auth Credentials
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+          userToLoginDto.email(),
+          userToLoginDto.password()
+        );
+
+        // Generate the token
+        User authUser = (User) authenticationManager.authenticate(auth).getPrincipal();
+        String token = tokenService.generateToken(authUser);
+
+        return new LoggedUserDto(
+          false,
+          authUser.getId(),
+          authUser.getFirstName(),
+          authUser.getLastName(),
+          authUser.getEmail(),
+          token
+        );
+    }
+
     /** Get the user by phone from the database
      *
      * @param request HttpServletRequest
@@ -85,6 +129,7 @@ public class UserService {
             throw new UserNotFoundException("User not found in the database");
         }
 
-        return userRepository.findByPhoneAndActiveTrue(userPhone);
+        return (User) userRepository.findByPhoneAndActiveTrue(userPhone);
     }
+
 }
