@@ -1,6 +1,8 @@
 package com.example.app.controller;
 
+import com.example.app.dto.user.LoggedUserDto;
 import com.example.app.dto.user.SignedUserDTO;
+import com.example.app.dto.user.UserToLoginDto;
 import com.example.app.dto.user.UserToSignUpDto;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -14,6 +16,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,7 +43,7 @@ public class UserController {
         responseCode = "200", description = "User created successfully",
         content = {
           @Content(mediaType = "application/json",
-            schema = @Schema(implementation = UserToSignUpDto.class))
+            schema = @Schema(implementation = SignedUserDTO.class))
         }),
       @ApiResponse(responseCode = "400", description = "User Already Exists", content = {@Content}),
       @ApiResponse(responseCode = "404", description = "Not Found", content = {@Content}),
@@ -68,5 +71,14 @@ public class UserController {
         return ResponseEntity
           .created(location)
           .body(userSignedUpDto);
+    }
+
+    @PostMapping("/auth")
+    @Transactional
+    public ResponseEntity<LoggedUserDto> login(@RequestBody @Valid UserToLoginDto userToLoginDto) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.login(userToLoginDto));
     }
 }
