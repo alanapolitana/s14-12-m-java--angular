@@ -31,7 +31,7 @@ public class TokenService {
               .withSubject(user.getPhone())
               .withClaim("id", user.getId())
               .withClaim("ROLE", user.getRole().name())
-              .withClaim("userName", user.getUsername())
+              .withClaim("userName", user.getAlias())
               .withClaim("email", user.getEmail())
               .withExpiresAt(getExpirationTime())
               .sign(algorithm);

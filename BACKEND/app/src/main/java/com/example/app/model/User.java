@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(name = "last_name")
     private String lastName;
     @Column(name = "user_name", unique = true)
-    private String userName;
+    private String alias;
     @Column(unique = true)
     private String phone;
     @Column(unique = true)
@@ -64,7 +64,6 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    @Override
     public String getUsername() {
         return email;
     }
@@ -93,12 +92,12 @@ public class User implements UserDetails {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof User user)) return false;
-        return active == user.active && Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(userName, user.userName) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role;
+        return active == user.active && Objects.equals(id, user.id) && Objects.equals(firstName, user.firstName) && Objects.equals(lastName, user.lastName) && Objects.equals(alias, user.alias) && Objects.equals(phone, user.phone) && Objects.equals(email, user.email) && Objects.equals(password, user.password) && role == user.role;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, lastName, userName, phone, email, password, active, role);
+        return Objects.hash(id, firstName, lastName, alias, phone, email, password, active, role);
     }
 
     @Override
@@ -107,7 +106,7 @@ public class User implements UserDetails {
           "id=" + id +
           ", firstName='" + firstName + '\'' +
           ", lastName='" + lastName + '\'' +
-          ", userName='" + userName + '\'' +
+          ", userName='" + alias + '\'' +
           ", phone='" + phone + '\'' +
           ", email='" + email + '\'' +
           ", password='" + password + '\'' +

@@ -37,7 +37,7 @@ public class UserService {
         if (userRepository.existsByPhoneAndActiveTrue(userToSignUpDto.phone()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese teléfono");
 
-        if (userRepository.existsByUserNameAndActiveTrue(userToSignUpDto.userName()))
+        if (userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
 
         // Get the plain password
@@ -114,6 +114,12 @@ public class UserService {
         );
     }
 
+    public SignedUserDTO getUser(HttpServletRequest request) {
+        User user = getUserByPhoneFromDatabase(request);
+
+        return userMapper.userToSignedUserDTO(user);
+    }
+
     /** Get the user by phone from the database
      *
      * @param request HttpServletRequest
@@ -131,5 +137,4 @@ public class UserService {
 
         return (User) userRepository.findByPhoneAndActiveTrue(userPhone);
     }
-
 }

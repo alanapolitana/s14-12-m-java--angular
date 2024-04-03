@@ -40,7 +40,7 @@ public class SecurityFilter extends OncePerRequestFilter {
 
             if (subject != null) {
                 // Search user in DB
-                var usuario = userRepository.findByEmailAndActiveTrue(subject);
+                var usuario = userRepository.findByPhoneAndActiveTrue(subject);
 
                 var authentication = new UsernamePasswordAuthenticationToken(
                   usuario,
