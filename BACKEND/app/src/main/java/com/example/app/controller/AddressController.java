@@ -48,7 +48,7 @@ public class AddressController {
         return ResponseEntity.created(new URI("/addresses")).build();
     }
 
-    @Operation(summary = "allows to register an address")
+    @Operation(summary = "allows to obtain the addresses of a user")
     @ApiResponses(value = {
             @ApiResponse(
                     responseCode = "200", description = "Addresses found successfully",
