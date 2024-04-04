@@ -10,6 +10,8 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 @Getter
@@ -42,11 +44,9 @@ public class User implements UserDetails {
      * that the Address entity is deleted when the User entity is deleted.
      * The `User` entity is the parent side of the relationship, so it is the owning side of the relationship.
      * While the `Address` entity is the child side of the relationship, so it is the inverse side of the relationship.
-
+     */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Address> addresses;
-
-    */
 
     /* One User has many Orders (A user row can be referenced by multiple order rows)
      * The "user_id" column in the "order" table column maps this relationship via a foreign key that references the primary key of the "users" table.
