@@ -59,6 +59,23 @@ public class User implements UserDetails {
     private List<Order> orders;
     */
 
+    //****** Helper Methods for USER/ADDRESS models: Keep Both Sides of the Association in SYNC.********/
+
+    /** Add an address to the list of addresses
+     * @param address the address to add */
+    public void addAddress(Address address) {
+        this.addresses.add(address);
+        address.setUser(this);
+    }
+
+    /** Remove an address from the list of addresses
+     * @param address the address to remove */
+    public void removeAddress(Address address) {
+        address.setUser(null);
+        this.addresses.remove(address);
+    }
+    //********************End Helper Methods********************************************/
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
