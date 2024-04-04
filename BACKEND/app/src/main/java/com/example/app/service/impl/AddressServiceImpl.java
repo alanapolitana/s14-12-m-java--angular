@@ -2,6 +2,7 @@ package com.example.app.service.impl;
 
 import com.example.app.dto.address.AddressDTO;
 import com.example.app.dto.address.AddressPublicDataDTO;
+import com.example.app.dto.address.AddressUpdateDataDTO;
 import com.example.app.exception.user.UserNotFoundException;
 import com.example.app.mapper.AddressMapper;
 import com.example.app.model.Address;
@@ -31,23 +32,48 @@ public class AddressServiceImpl implements AddressService {
 
         Long id = addressDTO.user().id();
 
-        this.userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException
-                        ("El usuario con id "+id+" no se encuentra registrado"));
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException
+                        ("El usuario con id " + id + " no se encuentra registrado"));
 
-        addressRepository.save(this.addressMapper.toEntity(addressDTO));
+        addressRepository.save(addressMapper.toEntity(addressDTO));
+    }
+
+    @Override
+    @Transactional
+    public AddressPublicDataDTO updateAddress(Long id, AddressUpdateDataDTO addressUpdateDataDTO) {
+
+        Address addressDB = addressRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException
+                        ("La direccion con id " + id + " no se encuentra registrada"));
+
+        addressDB.setStreetNumber(addressUpdateDataDTO.streetNumber());
+        addressDB.setReferencePoint(addressUpdateDataDTO.referencePoint());
+
+        return addressMapper.toDto(addressRepository.save(addressDB));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<AddressPublicDataDTO> findAllByUserId(Long id) {
 
-        this.userRepository.findById(id)
-                .orElseThrow(()-> new UserNotFoundException
-                        ("El usuario con id "+id+" no se encuentra registrado"));
+        userRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException
+                        ("El usuario con id " + id + " no se encuentra registrado"));
 
-       List<Address> addresses = this.addressRepository.findAllByUserId(id);
+        List<Address> addresses = addressRepository.findAllByUserId(id);
 
-        return this.addressMapper.toAddressPublicDataDTO(addresses);
+        return addressMapper.toAddressPublicDataDTO(addresses);
+    }
+
+    @Override
+    @Transactional
+    public void deleteAddress(Long id) {
+
+        addressRepository.findById(id)
+                .orElseThrow(() -> new UserNotFoundException
+                        ("La direccion con id " + id + " no existe"));
+
+        addressRepository.deleteById(id);
     }
 }
