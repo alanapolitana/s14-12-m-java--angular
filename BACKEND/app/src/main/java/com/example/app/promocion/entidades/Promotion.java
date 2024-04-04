@@ -16,13 +16,13 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Promocion")
-public class Promocion {
+@Table(name = "Promotion")
+public class Promotion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String descripcion;
-    @Column(name = "codigo", nullable = false, unique = true)
+    private String description;
+    @Column(name = "code", nullable = false, unique = true)
     private String code;
-    private Double porcentaje;
+    private Double percentage;
 }

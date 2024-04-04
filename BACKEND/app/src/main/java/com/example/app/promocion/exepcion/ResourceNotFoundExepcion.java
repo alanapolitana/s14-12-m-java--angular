@@ -1,4 +1,4 @@
-package com.example.app.promocion.servicio.exepcion;
+package com.example.app.promocion.exepcion;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class ResourceNotFoundExepcion extends RuntimeException {
 
-    public ResourceNotFoundExepcion(String mensaje) {
-        super(mensaje);
+    public ResourceNotFoundExepcion(String message) {
+        super(message);
     }
 }

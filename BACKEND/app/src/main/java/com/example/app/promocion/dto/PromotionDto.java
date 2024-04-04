@@ -9,9 +9,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PromocionDto {
+public class PromotionDto {
     private Long id;
-    private String descripcion;
+    private String description;
     private String code;
-    private Double porcentaje;
+    private Double percentage;
 }
