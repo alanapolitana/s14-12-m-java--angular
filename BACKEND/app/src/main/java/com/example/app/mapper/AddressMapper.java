@@ -1,6 +1,6 @@
 package com.example.app.mapper;
 
-import com.example.app.dto.AddressDTO;
+import com.example.app.dto.address.AddressDTO;
 import com.example.app.model.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.MappingConstants;

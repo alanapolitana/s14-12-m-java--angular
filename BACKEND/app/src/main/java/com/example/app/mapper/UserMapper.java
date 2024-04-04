@@ -1,5 +1,6 @@
 package com.example.app.mapper;
 
+import com.example.app.dto.address.UserToSaveAddress;
 import com.example.app.dto.user.LoggedUserDto;
 import com.example.app.dto.user.SignedUserDTO;
 import com.example.app.dto.user.UserToLoginDto;
@@ -18,6 +19,8 @@ public interface UserMapper {
     SignedUserDTO userToSignedUserDTO(User user);
 
     User toEntity(UserToLoginDto userToLoginDto);
+
+    User toEntity(UserToSaveAddress userToSaveAddress);
 
     UserToLoginDto userToUserToLoginDto(User user);
 
