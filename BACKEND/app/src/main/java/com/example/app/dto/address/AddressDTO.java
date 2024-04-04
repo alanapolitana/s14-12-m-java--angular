@@ -1,7 +1,8 @@
-package com.example.app.dto;
+package com.example.app.dto.address;
 
-import com.example.app.dto.user.SignedUserDTO;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serializable;
 
@@ -10,8 +11,9 @@ import java.io.Serializable;
  */
 public record AddressDTO(
 
-
-        SignedUserDTO user,
+        @Valid
+        @NotNull(message = "El usuario es requerido")
+        UserToSaveAddress user,
 
         @NotBlank(message = "La provincia es requerida")
         String province,
