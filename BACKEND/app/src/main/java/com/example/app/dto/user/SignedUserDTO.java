@@ -10,13 +10,10 @@ import java.io.Serializable;
 public record SignedUserDTO(
   boolean isError,
   Long id,
-  String firstName,
-  String lastName,
-  String alias,
+  String fullName,
   String phone,
   String email,
-  Role role,
-  boolean active
+  Role role
 
 ) implements Serializable {
     public SignedUserDTO {

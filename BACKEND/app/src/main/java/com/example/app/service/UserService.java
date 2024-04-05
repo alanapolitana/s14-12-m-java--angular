@@ -37,7 +37,7 @@ public class UserService {
         if (userRepository.existsByPhoneAndActiveTrue(userToSignUpDto.phone()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese teléfono");
 
-        if (userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
+        if (userToSignUpDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
 
         // Get the plain password
@@ -83,7 +83,7 @@ public class UserService {
 
         // Check if the user exists
         if (!userRepository.existsByEmailAndActiveTrue(userEmail))
-            throw new UserNotFoundException("El usuario no existe en la base de datos");
+            throw new UserNotFoundException("El email o la contraseña es incorrecta.");
 
         // Get hashed password from the database
         String hashedPassword = userRepository.findByEmailAndActiveTrue(userEmail).getPassword();
@@ -107,8 +107,7 @@ public class UserService {
         return new LoggedUserDto(
           false,
           authUser.getId(),
-          authUser.getFirstName(),
-          authUser.getLastName(),
+          authUser.getFullName(),
           authUser.getEmail(),
           token
         );
