@@ -13,6 +13,7 @@ public record SignedUserDTO(
   String fullName,
   String phone,
   String email,
+  String alias,
   Role role
 
 ) implements Serializable {
