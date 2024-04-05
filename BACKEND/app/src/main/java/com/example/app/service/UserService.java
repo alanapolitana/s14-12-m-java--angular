@@ -83,7 +83,7 @@ public class UserService {
 
         // Check if the user exists
         if (!userRepository.existsByEmailAndActiveTrue(userEmail))
-            throw new UserNotFoundException("El usuario no existe en la base de datos");
+            throw new UserNotFoundException("El email o la contraseña es incorrecta.");
 
         // Get hashed password from the database
         String hashedPassword = userRepository.findByEmailAndActiveTrue(userEmail).getPassword();
