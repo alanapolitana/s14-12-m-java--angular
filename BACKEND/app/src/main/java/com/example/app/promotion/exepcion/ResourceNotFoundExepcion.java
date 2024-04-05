@@ -1,4 +1,4 @@
-package com.example.app.promocion.exepcion;
+package com.example.app.promotion.exepcion;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

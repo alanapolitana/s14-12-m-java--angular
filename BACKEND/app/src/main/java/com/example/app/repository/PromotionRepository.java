@@ -1,6 +1,6 @@
-package com.example.app.promocion.repositorio;
+package com.example.app.repository;
 
-import com.example.app.promocion.entidades.Promotion;
+import com.example.app.model.Promotion;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 

@@ -1,6 +1,6 @@
-package com.example.app.promocion.servicio;
+package com.example.app.service;
 
-import com.example.app.promocion.dto.PromotionDto;
+import com.example.app.promotion.dto.PromotionDto;
 import java.util.List;
 
 public interface PromotionService {

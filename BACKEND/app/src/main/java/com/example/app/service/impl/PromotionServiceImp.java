@@ -1,14 +1,15 @@
-package com.example.app.promocion.servicio;
+package com.example.app.service.impl;
 
-import com.example.app.promocion.dto.PromotionDto;
-import com.example.app.promocion.entidades.Promotion;
-import com.example.app.promocion.mapeo.PromotionMapping;
-import com.example.app.promocion.exepcion.ResourceNotFoundExepcion;
+import com.example.app.service.PromotionService;
+import com.example.app.promotion.dto.PromotionDto;
+import com.example.app.model.Promotion;
+import com.example.app.mapper.PromotionMapping;
+import com.example.app.promotion.exepcion.ResourceNotFoundExepcion;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import com.example.app.promocion.repositorio.PromotionRepository;
+import com.example.app.repository.PromotionRepository;
 
 @Service
 @AllArgsConstructor

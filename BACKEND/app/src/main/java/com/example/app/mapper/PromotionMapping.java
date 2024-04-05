@@ -1,7 +1,7 @@
-package com.example.app.promocion.mapeo;
+package com.example.app.mapper;
 
-import com.example.app.promocion.dto.PromotionDto;
-import com.example.app.promocion.entidades.Promotion;
+import com.example.app.promotion.dto.PromotionDto;
+import com.example.app.model.Promotion;
 
 public class PromotionMapping {
 

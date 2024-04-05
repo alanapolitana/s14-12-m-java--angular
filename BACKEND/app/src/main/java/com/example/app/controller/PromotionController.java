@@ -1,7 +1,7 @@
-package com.example.app.promocion.controlador;
+package com.example.app.controller;
 
-import com.example.app.promocion.dto.PromotionDto;
-import com.example.app.promocion.exepcion.ResourceNotFoundExepcion;
+import com.example.app.promotion.dto.PromotionDto;
+import com.example.app.promotion.exepcion.ResourceNotFoundExepcion;
 import java.util.List;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import com.example.app.promocion.servicio.PromotionService;
+import com.example.app.service.PromotionService;
 
 @AllArgsConstructor
 @RestController
-@RequestMapping("/api/promo")
+@RequestMapping("/promotion")
 public class PromotionController {
 
     private final PromotionService promotionService;

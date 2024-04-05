@@ -1,4 +1,4 @@
-package com.example.app.promocion.dto;
+package com.example.app.promotion.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
