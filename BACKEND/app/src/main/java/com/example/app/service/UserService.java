@@ -37,7 +37,7 @@ public class UserService {
         if (userRepository.existsByPhoneAndActiveTrue(userToSignUpDto.phone()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese teléfono");
 
-        if (userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
+        if (userToSignUpDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToSignUpDto.alias()))
             throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
 
         // Get the plain password
@@ -107,8 +107,7 @@ public class UserService {
         return new LoggedUserDto(
           false,
           authUser.getId(),
-          authUser.getFirstName(),
-          authUser.getLastName(),
+          authUser.getFullName(),
           authUser.getEmail(),
           token
         );
