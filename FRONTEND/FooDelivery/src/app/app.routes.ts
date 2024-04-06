@@ -7,10 +7,7 @@ import { ProductsListComponent } from './products/products-list/products-list.co
 export const routes: Routes = [
      
     {path: "home", component: MainContentComponent},
-   
     {path: "login", component: LoginComponent},
-    
-
     {path: "register", component: RegisterComponent},
     {path: "products", component: ProductsListComponent},
     {path: "**", redirectTo: "home"}

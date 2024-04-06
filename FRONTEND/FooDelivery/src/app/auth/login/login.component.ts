@@ -7,6 +7,9 @@ import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 
 
+import { HttpClient } from '@angular/common/http';
+
+import { tap } from 'rxjs/operators';
 @Component({
   selector: 'app-login',
   standalone: true,
@@ -17,7 +20,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private formBuilder: FormBuilder, private authService: AuthService, private router: Router) {
+  constructor(private formBuilder: FormBuilder, private authService: AuthService, private http: HttpClient, private router: Router) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, Validators.minLength(8), Validators.maxLength(20)]]
@@ -27,25 +30,24 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
   login(): void {
     if (this.loginForm.valid) {
       console.log('Formulario válido, enviando datos...');
       const { email, password } = this.loginForm.value;
-      this.authService.login(email, password).subscribe(
-        response => {
-          
-          console.log('Inicio de sesión exitoso');
-          
-          this.authService.setToken(response.token);
-        
-          this.router.navigate(['/personal-dashboard']); 
-        },
-        error => {
-         
-          console.error('Error en el inicio de sesión:', error);
-        }
-      );
+      this.authService.login(email, password)
+        .pipe(
+          tap(response => {
+            console.log('Inicio de sesión exitoso');
+            this.authService.setToken(response.token);
+            this.router.navigate(['/personal-dashboard']); 
+          })
+        )
+        .subscribe(
+          () => {},
+          error => {
+            console.error('Error en el inicio de sesión:', error);
+          }
+        );
     } else {
       console.log('Formulario inválido, no se puede enviar.');
     }
