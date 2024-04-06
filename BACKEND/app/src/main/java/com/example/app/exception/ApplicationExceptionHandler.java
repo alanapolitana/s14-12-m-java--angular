@@ -15,7 +15,6 @@ import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
-@Order(2)
 public class ApplicationExceptionHandler {
 
     // Validations errors
