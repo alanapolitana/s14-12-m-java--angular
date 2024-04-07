@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit {
           tap(response => {
             console.log('Inicio de sesión exitoso');
             this.authService.setToken(response.token);
-            this.router.navigate(['/personal-dashboard']); 
+            this.router.navigate(['/home']); 
           })
         )
         .subscribe(
