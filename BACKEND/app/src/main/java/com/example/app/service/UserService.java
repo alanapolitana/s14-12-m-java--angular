@@ -1,5 +1,6 @@
 package com.example.app.service;
 
+import com.example.app.dto.GeneralResponseDTO;
 import com.example.app.dto.user.*;
 import com.example.app.exception.user.UserAlreadyExistsException;
 import com.example.app.exception.user.UserDataLoginException;
@@ -124,6 +125,34 @@ public class UserService {
         User user = getUserByPhoneFromDatabase(request);
 
         return userMapper.userToSignedUserDTO(user.update(userToUpdateDto));
+    }
+
+    public GeneralResponseDTO changePassword(UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
+        User user = getUserByPhoneFromDatabase(request);
+
+        // Get the old plain password
+        String oldPlainPassword = userChangePasswordDTO.oldPassword();
+
+        // Get hashed password from the database
+        String hashedPassword = userRepository.findByEmailAndActiveTrue(user.getEmail()).getPassword();
+
+        // Check if the password is correct
+        boolean passwordMatches = PasswordEncoder.verifyPassword(oldPlainPassword, hashedPassword);
+
+        if (!passwordMatches)
+            throw new UserDataLoginException("La contraseña anterior es incorrecta.");
+
+        // Get the new plain password
+        String newPlainPassword = userChangePasswordDTO.newPassword();
+
+        // Generate the password hash
+        String newHashedPassword = PasswordEncoder.generatePasswordHash(newPlainPassword);
+
+        // Assign the new password hash to the entity
+        user.setPassword(newHashedPassword);
+
+        return new GeneralResponseDTO(false, "Contraseña actualizada correctamente.");
+
     }
 
     /** Get the user by phone from the database
