@@ -4,9 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './home/header/header.component';
 import { FooterComponent } from './home/footer/footer.component';
 import { NavComponent } from './home/nav/nav.component';
-
-
-
 @Component({
   selector: 'app-root',
   standalone: true,
