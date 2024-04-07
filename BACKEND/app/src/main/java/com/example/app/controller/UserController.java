@@ -1,5 +1,6 @@
 package com.example.app.controller;
 
+import com.example.app.dto.GeneralResponseDTO;
 import com.example.app.dto.user.*;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -137,6 +138,17 @@ public class UserController {
         return ResponseEntity
           .status(HttpStatus.OK)
           .body(userService.updateUser(userToUpdateDto, request));
+
+    }
+
+    @PutMapping("/auth")
+    @Transactional
+    public ResponseEntity<GeneralResponseDTO> updateUser(
+      @RequestBody @Valid UserChangePasswordDTO userChangePasswordDTO, HttpServletRequest request) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.changePassword(userChangePasswordDTO, request));
 
     }
 }
