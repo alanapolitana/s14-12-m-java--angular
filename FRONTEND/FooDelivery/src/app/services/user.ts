@@ -1,13 +1,13 @@
 
 export interface User {
-    id: number;
+/*     id: number; */
     firstName: string;
     lastName: string;
     alias: string;
     phone: string;
     email: string;
     /* password: string; */
-    role: string;
+   /*  role: string; */
     /* active: boolean; */
   }
   

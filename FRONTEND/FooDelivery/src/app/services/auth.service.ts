@@ -1,6 +1,8 @@
+
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject } from 'rxjs';
+import { User } from '../services/user';
 
 @Injectable({
   providedIn: 'root'
@@ -18,17 +20,24 @@ export class AuthService {
   }
 
   setToken(token: string): void {
-    localStorage.setItem(this.tokenKey, token);
-    this.isLoggedInSubject.next(true); 
+    if (typeof localStorage !== 'undefined') {
+      localStorage.setItem(this.tokenKey, token);
+      this.isLoggedInSubject.next(true);
+    }
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.tokenKey);
+    if (typeof localStorage !== 'undefined') {
+      return localStorage.getItem(this.tokenKey);
+    }
+    return null;
   }
 
   removeToken(): void {
-    localStorage.removeItem(this.tokenKey);
-    this.isLoggedInSubject.next(false); 
+    if (typeof localStorage !== 'undefined') {
+      localStorage.removeItem(this.tokenKey);
+      this.isLoggedInSubject.next(false);
+    }
   }
 
   addTokenToHeaders(): HttpHeaders {
@@ -41,4 +50,13 @@ export class AuthService {
       return new HttpHeaders();
     }
   }
+
+  getUserProfile(): Observable<User> {
+    return this.http.get<User>(`${this.baseUrl}/users/me`, { headers: this.addTokenToHeaders() });
+  }
+
+  updateUserProfile(user: User): Observable<any> {
+    return this.http.put<any>(`${this.baseUrl}/users/me`, user, { headers: this.addTokenToHeaders() });
+  }
+
 }
