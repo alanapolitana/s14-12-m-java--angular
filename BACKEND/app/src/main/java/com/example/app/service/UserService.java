@@ -1,9 +1,6 @@
 package com.example.app.service;
 
-import com.example.app.dto.user.LoggedUserDto;
-import com.example.app.dto.user.SignedUserDTO;
-import com.example.app.dto.user.UserToLoginDto;
-import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.dto.user.*;
 import com.example.app.exception.user.UserAlreadyExistsException;
 import com.example.app.exception.user.UserDataLoginException;
 import com.example.app.exception.user.UserNotFoundException;
@@ -117,6 +114,16 @@ public class UserService {
         User user = getUserByPhoneFromDatabase(request);
 
         return userMapper.userToSignedUserDTO(user);
+    }
+
+    public SignedUserDTO updateUser(UserToUpdateDto userToUpdateDto, HttpServletRequest request) {
+
+        if (userToUpdateDto.alias() != null && userRepository.existsByAliasAndActiveTrue(userToUpdateDto.alias()))
+            throw new UserAlreadyExistsException("Ya existe un usuario con ese username");
+
+        User user = getUserByPhoneFromDatabase(request);
+
+        return userMapper.userToSignedUserDTO(user.update(userToUpdateDto));
     }
 
     /** Get the user by phone from the database

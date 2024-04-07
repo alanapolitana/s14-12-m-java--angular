@@ -1,10 +1,7 @@
 package com.example.app.mapper;
 
 import com.example.app.dto.address.UserToSaveAddress;
-import com.example.app.dto.user.LoggedUserDto;
-import com.example.app.dto.user.SignedUserDTO;
-import com.example.app.dto.user.UserToLoginDto;
-import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.dto.user.*;
 import com.example.app.model.User;
 import org.mapstruct.*;
 
@@ -28,4 +25,10 @@ public interface UserMapper {
 
     LoggedUserDto userToLoggedUserDto(User user);
 
+    User toEntity(UserToUpdateDto userToUpdateDto);
+
+    UserToUpdateDto userToUserToUpdateDto(User user);
+
+    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+    User partialUpdate(UserToUpdateDto userToUpdateDto, @MappingTarget User user);
 }
