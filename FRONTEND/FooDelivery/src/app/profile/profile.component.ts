@@ -22,7 +22,6 @@ export class ProfileComponent implements OnInit {
   isEditing: boolean = false;
 
   editedFirstName: string = '';
-  editedLastName: string = '';
   editedAlias: string = '';
   editedPhone: string = '';
   editedEmail: string = '';
@@ -37,9 +36,7 @@ export class ProfileComponent implements OnInit {
     this.authService.getUserProfile().subscribe(
       (user: User) => {
         this.user = user;
- 
-        this.editedFirstName = this.user?.firstName || '';
-        this.editedLastName = this.user?.lastName || '';
+        this.editedFirstName = this.user?.fullName || '';
         this.editedAlias = this.user?.alias || '';
         this.editedPhone = this.user?.phone || '';
         this.editedEmail = this.user?.email || '';
@@ -55,25 +52,24 @@ export class ProfileComponent implements OnInit {
   }
 
   saveChanges(): void {
-   
-    this.user = {
-      ...this.user,
-      firstName: this.editedFirstName,
-      lastName: this.editedLastName,
-      alias: this.editedAlias,
-      phone: this.editedPhone,
-      email: this.editedEmail
-    };
+    if (this.user) {
+      this.user = {
+        ...this.user,
+        fullName: this.editedFirstName,
+        alias: this.editedAlias,
+        phone: this.editedPhone,
+        email: this.editedEmail
+      };
 
-  
-    this.authService.updateUserProfile(this.user).subscribe(
-      () => {
-        console.log('Perfil de usuario actualizado con éxito');
-        this.isEditing = false;
-      },
-      (error) => {
-        console.error('Error updating user profile:', error);
-      }
-    );
+      this.authService.updateUserProfile(this.user).subscribe(
+        () => {
+          console.log('Perfil de usuario actualizado con éxito');
+          this.isEditing = false;
+        },
+        (error) => {
+          console.error('Error updating user profile:', error);
+        }
+      );
+    }
   }
 }
