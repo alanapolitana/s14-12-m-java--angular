@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -6,14 +5,10 @@ import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../services/auth.service';
 
-=======
-import { Component } from '@angular/core';
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 
 @Component({
   selector: 'app-register',
   standalone: true,
-<<<<<<< HEAD
   imports: [ReactiveFormsModule,CommonModule],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -56,12 +51,3 @@ export class RegisterComponent implements OnInit {
     }
   }
 }
-=======
-  imports: [],
-  templateUrl: './register.component.html',
-  styleUrl: './register.component.css'
-})
-export class RegisterComponent {
-
-}
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b

@@ -68,10 +68,6 @@
 			<scope>test</scope>
 		</dependency>
 
-<<<<<<< HEAD
-		<!--
-=======
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
        <dependency>
            <groupId>org.springframework.boot</groupId>
            <artifactId>spring-boot-starter-security</artifactId>
@@ -82,25 +78,17 @@
 			<artifactId>spring-security-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-<<<<<<< HEAD
-		-->
-=======
-
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 		<dependency>
 			<groupId>me.paulschwarz</groupId>
 			<artifactId>spring-dotenv</artifactId>
 			<version>4.0.0</version>
 		</dependency>
-<<<<<<< HEAD
-=======
 
 		<dependency>
 			<groupId>com.auth0</groupId>
 			<artifactId>java-jwt</artifactId>
 			<version>4.4.0</version>
 		</dependency>
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 	</dependencies>
 
 	<build>
@@ -123,13 +111,8 @@
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-<<<<<<< HEAD
-					<source>17</source>
-					<target>17</target>
-=======
 					<source>1.8</source>
 					<target>1.8</target>
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 					<annotationProcessorPaths>
 
 						<path>
@@ -151,14 +134,11 @@
 						</path>
 
 					</annotationProcessorPaths>
-<<<<<<< HEAD
-=======
 					<compilerArgs>
 						<compilerArg>
 							-Amapstruct.defaultComponentModel=spring
 						</compilerArg>
 					</compilerArgs>
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 				</configuration>
 			</plugin>
 		</plugins>

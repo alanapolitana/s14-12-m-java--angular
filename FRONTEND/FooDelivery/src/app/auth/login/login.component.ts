@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
@@ -53,17 +52,4 @@ export class LoginComponent implements OnInit {
       console.log('Formulario inválido, no se puede enviar.');
     }
   }
-=======
-import { Component } from '@angular/core';
-
-@Component({
-  selector: 'app-login',
-  standalone: true,
-  imports: [],
-  templateUrl: './login.component.html',
-  styleUrl: './login.component.css'
-})
-export class LoginComponent {
-
->>>>>>> dd5ac6646478680df758b52bd8ef690ecae5d49b
 }
