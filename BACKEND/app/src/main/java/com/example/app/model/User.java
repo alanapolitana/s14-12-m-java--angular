@@ -1,5 +1,6 @@
 package com.example.app.model;
 
+import com.example.app.dto.user.UserToUpdateDto;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -110,5 +111,15 @@ public class User implements UserDetails {
           ", active=" + active +
           ", role=" + role +
           '}';
+    }
+
+    public User update(UserToUpdateDto userToUpdateDto) {
+        if (userToUpdateDto.fullName() != null)
+            this.fullName = userToUpdateDto.fullName();
+
+        if (userToUpdateDto.alias() != null)
+            this.alias = userToUpdateDto.alias();
+
+        return this;
     }
 }

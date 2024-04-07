@@ -1,9 +1,6 @@
 package com.example.app.controller;
 
-import com.example.app.dto.user.LoggedUserDto;
-import com.example.app.dto.user.SignedUserDTO;
-import com.example.app.dto.user.UserToLoginDto;
-import com.example.app.dto.user.UserToSignUpDto;
+import com.example.app.dto.user.*;
 import com.example.app.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -115,5 +112,31 @@ public class UserController {
         return ResponseEntity
           .status(HttpStatus.OK)
           .body(userService.getUser(request));
+    }
+
+    @Operation(
+      summary = "Update data user using token.",
+      description = "Let a User update data using the Token."
+    )
+    @ApiResponses(value = {
+      @ApiResponse(
+        responseCode = "200", description = "User updated successfully.",
+        content = {
+          @Content(mediaType = "application/json",
+            schema = @Schema(implementation = SignedUserDTO.class))
+        }),
+      @ApiResponse(responseCode = "403", description = "Forbidden access to this resource", content = {@Content}),
+      @ApiResponse(responseCode = "404", description = "User Not Found", content = {@Content}),
+      @ApiResponse(responseCode = "500", description = "Internal Server Error", content = {@Content})
+    })
+    @PutMapping
+    @Transactional
+    public ResponseEntity<SignedUserDTO> updateUser(
+      @RequestBody @Valid UserToUpdateDto userToUpdateDto, HttpServletRequest request) {
+
+        return ResponseEntity
+          .status(HttpStatus.OK)
+          .body(userService.updateUser(userToUpdateDto, request));
+
     }
 }
